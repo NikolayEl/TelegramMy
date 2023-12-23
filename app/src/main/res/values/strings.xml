@@ -2,4 +2,22 @@
     <string name="app_name">Telegram</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_default_username">FirstName LastName</string>
+    <string name="settings_default_status">online</string>
+    <string name="settings_text_account">Account</string>
+    <string name="settings_default_number_phone">+71111111111</string>
+    <string name="settings_label_text_bottom_phone">click to change phone number</string>
+    <string name="settings_login_default">login</string>
+    <string name="settings_label_login">Username</string>
+    <string name="settings_default_bio">About me</string>
+    <string name="settings_label_bio_default">Write a little about yourself</string>
+    <string name="settings_menu_change_name">Change name</string>
+    <string name="settings_menu_exit">Exit</string>
+    <string name="cd_register_image">register_image</string>
+    <string name="register_text_enter_code">Input code</string>
+    <string name="register_text_we_send">We have sent an SMS with a verification code to your phone</string>
+    <string name="register_hint_default_code">- - - - - -</string>
+    <string name="register_title_your_phone">Your phone</string>
+    <string name="register_descript_registration">registration</string>
+    <string name="register_toast_enter_phone">Enter your phone number</string>
 </resources>

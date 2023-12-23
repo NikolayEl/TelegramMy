@@ -3,6 +3,8 @@
     <style name="AppThemeLight" parent="MaterialDrawerTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="popupTheme">@style/actionMenu</item>
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
         <item name="android:colorBackground">@color/colorAccent</item>
 
         <!-- MaterialDrawer specific values -->

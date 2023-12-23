@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_default_username">FirstName LastName</string>
+    <string name="settings_default_status">online</string>
+    <string name="settings_default_number_phone">+71111111111</string>
+</resources>
