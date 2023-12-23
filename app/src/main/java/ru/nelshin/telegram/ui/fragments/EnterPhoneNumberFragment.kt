@@ -25,7 +25,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
     private lateinit var mPhoneNumber: String
     private lateinit var mCallback: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
-private lateinit var mBinding: FragmentEnterPhoneNumberBinding
+    private lateinit var mBinding: FragmentEnterPhoneNumberBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,10 +33,10 @@ private lateinit var mBinding: FragmentEnterPhoneNumberBinding
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentEnterPhoneNumberBinding.inflate(inflater, container, false)
-        mCallback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+        mCallback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                AUTH.signInWithCredential(credential).addOnCompleteListener{
-                    if (it.isSuccessful){
+                AUTH.signInWithCredential(credential).addOnCompleteListener {
+                    if (it.isSuccessful) {
                         showToast("Welcom to telegram")
                         (activity as RegisterActivity).replaceActivity(MainActivity())
                     } else {
@@ -60,7 +60,7 @@ private lateinit var mBinding: FragmentEnterPhoneNumberBinding
     }
 
     private fun sendCode() {
-        if (mBinding.registerInputPhoneNumber.text.toString().isEmpty()){
+        if (mBinding.registerInputPhoneNumber.text.toString().isEmpty()) {
             showToast(getString(R.string.register_toast_enter_phone))
         } else {
             authUser()
@@ -69,10 +69,14 @@ private lateinit var mBinding: FragmentEnterPhoneNumberBinding
 
     private fun authUser() {
         mPhoneNumber = mBinding.registerInputPhoneNumber.text.toString()
-        PhoneAuthOptions.newBuilder(AUTH)
-            .setPhoneNumber(mPhoneNumber)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(activity as RegisterActivity)
-            .setCallbacks(mCallback)
+        PhoneAuthProvider.verifyPhoneNumber(
+            PhoneAuthOptions
+                .newBuilder(FirebaseAuth.getInstance())
+                .setActivity(activity as RegisterActivity)
+                .setPhoneNumber(mPhoneNumber)
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setCallbacks(mCallback)
+                .build()
+        )
     }
 }

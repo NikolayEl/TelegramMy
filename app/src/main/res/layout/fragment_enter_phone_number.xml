@@ -13,7 +13,6 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/editText"
         android:hint="@string/register_toast_enter_phone"
-        android:textColorHint="@color/colorGrey"
         android:autofillHints="" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

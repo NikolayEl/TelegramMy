@@ -8,23 +8,32 @@ import ru.nelshin.telegram.R
 import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.ui.fragments.ChatsFragment
 
-fun Fragment.showToast(message:String){
+fun Fragment.showToast(message: String) {
     Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
 }
 
-fun AppCompatActivity.replaceActivity(activity: AppCompatActivity){
+fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
     val intent = Intent(this, activity::class.java)
     startActivity(intent)
     this.finish()
 }
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment) {
-    supportFragmentManager.beginTransaction()
-        .addToBackStack(null)
-        .replace(
-            R.id.dataContainer,
-            fragment
-        ).commit()
+fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = true) {
+    if (addStack) {
+        supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .replace(
+                R.id.dataContainer,
+                fragment
+            ).commit()
+    } else {
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.dataContainer,
+                fragment
+            ).commit()
+    }
+
 }
 
 fun Fragment.replaceFragment(fragment: Fragment) {
