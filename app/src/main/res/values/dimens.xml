@@ -16,6 +16,6 @@
     <dimen name="top_margin_large">16dp</dimen>
     <dimen name="end_margin_default">16dp</dimen>
     <dimen name="settings_ripple_effect_radius">4dp</dimen>
-    <dimen name="appPadding">5dp</dimen>
+    <dimen name="appPadding">10dp</dimen>
 
 </resources>
