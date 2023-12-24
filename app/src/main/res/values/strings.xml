@@ -20,4 +20,9 @@
     <string name="register_title_your_phone">Your phone</string>
     <string name="register_descript_registration">registration</string>
     <string name="register_toast_enter_phone">Enter your phone number</string>
+    <string name="settings_hint_input_name">Name</string>
+    <string name="string_hint_input_surname">Surname</string>
+    <string name="settings_toast_name_is_empty">The name can not be empty</string>
+    <string name="toast_data_updated">Data updated</string>
+    <string name="settings_hint_input_username">username</string>
 </resources>
