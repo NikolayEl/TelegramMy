@@ -3,6 +3,7 @@ package ru.nelshin.telegram.ui.objects
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -18,10 +19,30 @@ import ru.nelshin.telegram.utilits.replaceFragment
 class AppDrawer (val mainActivity: AppCompatActivity, val toolbar: Toolbar){
     private lateinit var mDriver: Drawer
     private lateinit var mHeader: AccountHeader
+    private lateinit var mDrawerLayout: DrawerLayout
 
     fun create(){
         createHeader()
         createDrawer()
+        mDrawerLayout = mDriver.drawerLayout
+    }
+
+    fun disableDrawer(){
+        mDriver.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        toolbar.setNavigationOnClickListener {
+            mainActivity.supportFragmentManager.popBackStack()
+        }
+    }
+
+    fun enableDrawer(){
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mDriver.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        toolbar.setNavigationOnClickListener {
+            mDriver.openDrawer()
+        }
     }
     private fun createDrawer() {
         mDriver = DrawerBuilder()
