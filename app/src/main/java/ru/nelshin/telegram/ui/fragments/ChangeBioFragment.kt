@@ -1,59 +1,45 @@
 package ru.nelshin.telegram.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.nelshin.telegram.R
+import ru.nelshin.telegram.databinding.FragmentChangeBioBinding
+import ru.nelshin.telegram.utilits.CHILD_BIO
+import ru.nelshin.telegram.utilits.NODE_USERS
+import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
+import ru.nelshin.telegram.utilits.CURRENT_UID
+import ru.nelshin.telegram.utilits.USER
+import ru.nelshin.telegram.utilits.showToast
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ChangeBioFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ChangeBioFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var mBinding: FragmentChangeBioBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_bio, container, false)
+    ): View {
+        mBinding = FragmentChangeBioBinding.inflate(inflater, container, false)
+        return mBinding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChangeBioFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChangeBioFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onResume() {
+        super.onResume()
+        mBinding.settingsInputBio.setText(USER.bio)
+    }
+
+    override fun change() {
+        super.change()
+        val newBio = mBinding.settingsInputBio.text.toString()
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_BIO).setValue(newBio)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    showToast(getString(R.string.toast_data_updated))
+                    USER.bio = newBio
+                    this.parentFragmentManager.popBackStack()
                 }
             }
     }

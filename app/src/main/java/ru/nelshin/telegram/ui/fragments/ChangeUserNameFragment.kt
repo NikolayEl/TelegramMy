@@ -1,14 +1,9 @@
 package ru.nelshin.telegram.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import ru.nelshin.telegram.MainActivity
 import ru.nelshin.telegram.R
 import ru.nelshin.telegram.databinding.FragmentChangeUserNameBinding
 import ru.nelshin.telegram.utilits.AppValueEventListener
@@ -16,12 +11,11 @@ import ru.nelshin.telegram.utilits.CHILD_USERNAME
 import ru.nelshin.telegram.utilits.NODE_USERNAMES
 import ru.nelshin.telegram.utilits.NODE_USERS
 import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
-import ru.nelshin.telegram.utilits.UID
+import ru.nelshin.telegram.utilits.CURRENT_UID
 import ru.nelshin.telegram.utilits.USER
 import ru.nelshin.telegram.utilits.showToast
-import java.util.Locale
 
-class ChangeUserNameFragment : BaseFragment(R.layout.fragment_change_user_name) {
+class ChangeUserNameFragment : BaseChangeFragment(R.layout.fragment_change_user_name) {
 
     private lateinit var mBinding: FragmentChangeUserNameBinding
 
@@ -37,22 +31,10 @@ class ChangeUserNameFragment : BaseFragment(R.layout.fragment_change_user_name) 
 
     override fun onResume() {
         super.onResume()
-        setHasOptionsMenu(true)
         mBinding.settingsInputUsername.setText(USER.username)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        (activity as MainActivity).menuInflater.inflate(R.menu.settings_menu_confirm, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.settings_confirm_change -> change()
-        }
-        return true
-    }
-
-    private fun change() {
+    override fun change() {
         mNewUsername = mBinding.settingsInputUsername.text.toString().lowercase()
         if (mNewUsername.isEmpty()){
             showToast("Field is empty")
@@ -69,7 +51,7 @@ class ChangeUserNameFragment : BaseFragment(R.layout.fragment_change_user_name) 
     }
 
     private fun changeUserName() {
-        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(UID)
+        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(CURRENT_UID)
             .addOnCompleteListener {
                 if (it.isSuccessful){
                     updateCurrentUsername()
@@ -78,7 +60,7 @@ class ChangeUserNameFragment : BaseFragment(R.layout.fragment_change_user_name) 
     }
 
     private fun updateCurrentUsername() {
-        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_USERNAME).setValue(mNewUsername)
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_USERNAME).setValue(mNewUsername)
             .addOnCompleteListener {
                 if(it.isSuccessful){
                     deleteOldUsername()
