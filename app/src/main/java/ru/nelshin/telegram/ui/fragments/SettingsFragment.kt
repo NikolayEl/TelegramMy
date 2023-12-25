@@ -2,7 +2,6 @@ package ru.nelshin.telegram.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,8 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import com.google.firebase.storage.StorageReference
-import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import ru.nelshin.telegram.R
@@ -19,12 +16,9 @@ import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.databinding.FragmentSettingsBinding
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AUTH
-import ru.nelshin.telegram.utilits.CHILD_PHOTO_URL
 import ru.nelshin.telegram.utilits.FOLDER_PROFILE_IMAGE
 import ru.nelshin.telegram.utilits.REF_STORAGE_ROOT
 import ru.nelshin.telegram.utilits.CURRENT_UID
-import ru.nelshin.telegram.utilits.NODE_USERS
-import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
 import ru.nelshin.telegram.utilits.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.getUrlFromStorage
@@ -57,7 +51,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         mBinding.settingsBio.text = USER.bio
         mBinding.settingsFullName.text = USER.fullname
         mBinding.settingsPhoneNumber.text = USER.phone
-        mBinding.settingsStatus.text = USER.status
+        mBinding.settingsStatus.text = USER.state
         mBinding.settingsUsername.text = USER.username
         mBinding.settingsBtnChangeUsername.setOnClickListener {
             replaceFragment(ChangeUserNameFragment())
@@ -68,6 +62,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         mBinding.settingsChangePhoto.setOnClickListener {
             changePhotoUser()
         }
+        if(USER.photoUrl.isNotEmpty())mBinding.settingsUserPhoto.downloadAndSetImage(USER.photoUrl)
     }
 
     private fun changePhotoUser() {
@@ -108,6 +103,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                         mBinding.settingsUserPhoto.downloadAndSetImage(it)
                         showToast(getString(R.string.toast_data_updated))
                         USER.photoUrl = it
+                        APP_ACTIVITY.mAppDrawer.updateHeader()
                     }
                 }
             }

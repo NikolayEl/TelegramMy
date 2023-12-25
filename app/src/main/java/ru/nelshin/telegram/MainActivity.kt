@@ -14,6 +14,7 @@ import ru.nelshin.telegram.ui.fragments.ChatsFragment
 import ru.nelshin.telegram.ui.objects.AppDrawer
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AUTH
+import ru.nelshin.telegram.utilits.AppStates
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.CHILD_PHOTO_URL
 import ru.nelshin.telegram.utilits.NODE_USERS
@@ -23,6 +24,7 @@ import ru.nelshin.telegram.utilits.FOLDER_PROFILE_IMAGE
 import ru.nelshin.telegram.utilits.REF_STORAGE_ROOT
 import ru.nelshin.telegram.utilits.USER
 import ru.nelshin.telegram.utilits.initFarebase
+import ru.nelshin.telegram.utilits.initUser
 import ru.nelshin.telegram.utilits.replaceActivity
 import ru.nelshin.telegram.utilits.replaceFragment
 import ru.nelshin.telegram.utilits.showToast
@@ -39,8 +41,12 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         APP_ACTIVITY = this
-        initFields()
-        initFunc()
+        initFarebase()
+        initUser{
+            initFields()
+            initFunc()
+        }
+
     }
     private fun initFunc() {
         if (AUTH.currentUser != null) {
@@ -57,17 +63,16 @@ class MainActivity : AppCompatActivity() {
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
-        initFarebase()
-        initUser()
-
     }
 
-    private fun initUser() {
-        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-            .addListenerForSingleValueEvent(AppValueEventListener{
+    override fun onStart() {
+        super.onStart()
+        AppStates.updateState(AppStates.ONLINE)
+    }
 
-                USER = it.getValue(User::class.java) ?:User()
-            })
+    override fun onStop() {
+        super.onStop()
+        AppStates.updateState(AppStates.OFFLINE)
     }
 }
 

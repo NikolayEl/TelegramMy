@@ -26,4 +26,7 @@
     <string name="toast_data_updated">Data updated</string>
     <string name="settings_hint_input_username">username</string>
     <string name="settings_hint_input_bio">bio</string>
+    <string name="setting_status_online">online</string>
+    <string name="setting_status_was_recently">was recently</string>
+    <string name="setting_status_typing">typing</string>
 </resources>
