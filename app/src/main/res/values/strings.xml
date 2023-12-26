@@ -29,4 +29,5 @@
     <string name="setting_status_online">online</string>
     <string name="setting_status_was_recently">was recently</string>
     <string name="setting_status_typing">typing</string>
+    <string name="main_toast_read_contacts">read contacts</string>
 </resources>

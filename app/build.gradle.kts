@@ -42,6 +42,7 @@ android {
 
 dependencies {
 
+    implementation ("com.firebaseui:firebase-ui-database:8.0.2")
     implementation ("com.squareup.picasso:picasso:2.8")
     api ("com.theartofdev.edmodo:android-image-cropper:2.8.0")
     implementation ("com.google.firebase:firebase-appindexing:20.0.0")

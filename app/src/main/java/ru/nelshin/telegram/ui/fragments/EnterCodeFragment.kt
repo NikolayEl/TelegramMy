@@ -15,6 +15,7 @@ import ru.nelshin.telegram.utilits.AppTextWatcher
 import ru.nelshin.telegram.utilits.CHILD_ID
 import ru.nelshin.telegram.utilits.CHILD_PHONE
 import ru.nelshin.telegram.utilits.CHILD_USERNAME
+import ru.nelshin.telegram.utilits.NODE_PHONES
 import ru.nelshin.telegram.utilits.NODE_USERS
 import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
 import ru.nelshin.telegram.utilits.replaceActivity
@@ -30,7 +31,7 @@ class EnterCodeFragment(val mPhoneNumber: String, val id: String) :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentEnterCodeBinding.inflate(inflater, container, false)
         (activity as RegisterActivity).title = mPhoneNumber
         mBinding.registerInputCode.addTextChangedListener(AppTextWatcher {
@@ -55,15 +56,17 @@ class EnterCodeFragment(val mPhoneNumber: String, val id: String) :
                 dateMap[CHILD_PHONE] = mPhoneNumber
                 dateMap[CHILD_USERNAME] = uid
 
-                REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
-                    .addOnCompleteListener { task2 ->
-                        if (task2.isSuccessful) {
-                            showToast("Welcome")
-                            (activity as RegisterActivity).replaceActivity(MainActivity())
-                        } else showToast(task2.exception?.message.toString())
-                    } } else {
-                showToast(task1.exception?.message.toString())
-            }
+                REF_DATABASE_ROOT.child(NODE_PHONES).child(mPhoneNumber).setValue(uid)
+                    .addOnFailureListener { showToast(it.message.toString()) }
+                    .addOnSuccessListener {
+                        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+                            .addOnSuccessListener {
+                                showToast("Welcome")
+                                (activity as RegisterActivity).replaceActivity(MainActivity())
+                            }
+                            .addOnFailureListener{showToast(it.message.toString())}
+                    }
+            } else showToast(task1.exception?.message.toString())
         }
 
     }
