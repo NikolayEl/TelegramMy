@@ -1,15 +1,14 @@
 package ru.nelshin.telegram.ui.fragments
 
-import androidx.fragment.app.Fragment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import ru.nelshin.telegram.MainActivity
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.hideKeyboard
 
-open class BaseChangeFragment(layout: Int) : Fragment() {
+open class BaseChangeFragment(layout: Int) : Fragment(layout) {
 
     override fun onStart() {
         super.onStart()

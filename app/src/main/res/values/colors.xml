@@ -6,7 +6,9 @@
     <color name="colorAccentDark">#D1CDCD</color>
     <color name="colorPrimary">#0088CC</color>
     <color name="colorGrey">#777A7C</color>
+    <color name="colorGreen">#8AC87B</color>
     <color name="colorPrimaryDark">#007AAC</color>
+    <color name="ColorBlueWish">#7575D4FB</color>
 
     <!-- Material DEFAULT colors -->
     <color name="material_drawer_primary">#2196F3</color>

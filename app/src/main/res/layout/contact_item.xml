@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_margin="@dimen/start_margin_default"
+    android:layout_margin="@dimen/app_margin_default"
     style="@style/settingsButtons"
     android:layout_height="wrap_content">
 

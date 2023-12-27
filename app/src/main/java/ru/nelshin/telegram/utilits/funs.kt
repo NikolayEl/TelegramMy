@@ -2,16 +2,17 @@ package ru.nelshin.telegram.utilits
 
 import android.content.Context
 import android.content.Intent
+import android.provider.ContactsContract
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.activities.RegisterActivity
-import ru.nelshin.telegram.ui.fragments.ChatsFragment
+import ru.nelshin.telegram.models.CommonModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
@@ -28,13 +29,13 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = tr
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .replace(
-                R.id.dataContainer,
+                R.id.data_Container,
                 fragment
             ).commit()
     } else {
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.dataContainer,
+                R.id.data_Container,
                 fragment
             ).commit()
     }
@@ -45,7 +46,7 @@ fun Fragment.replaceFragment(fragment: Fragment) {
     this.parentFragmentManager.beginTransaction()
         .addToBackStack(null)
         .replace(
-            R.id.dataContainer,
+            R.id.data_Container,
             fragment
         ).commit()
 }
@@ -61,4 +62,35 @@ fun ImageView.downloadAndSetImage(url: String){
         .fit()
         .placeholder(R.drawable.default_photo)
         .into(this)
+}
+
+fun initContacts() {
+    if(chekPermission(READ_CONTACTS)){
+        val arrayContacts = arrayListOf<CommonModel>()
+        val cursor = APP_ACTIVITY.contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )
+        cursor?.let{
+            while (it.moveToNext()){
+                val fullName = it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME))
+                val phone = it.getString(it.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                val newModel = CommonModel()
+                newModel.fullname = fullName
+                newModel.phone = phone.replace(Regex("[\\s,-]"), "")
+                arrayContacts.add(newModel)
+            }
+        }
+        cursor?.close()
+        updatePhonesToDatabase(arrayContacts)
+    }
+}
+
+fun String.asTime(): String {
+    val time = Date(this.toLong())
+    val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return timeFormat.format(time)
 }

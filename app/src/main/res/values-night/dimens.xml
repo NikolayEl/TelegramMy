@@ -3,8 +3,8 @@
     <dimen name="settings_user_photo_width">55dp</dimen>
     <dimen name="settings_user_photo_height">55dp</dimen>
     <dimen name="settings_user_photo_border">2dp</dimen>
-    <dimen name="start_margin_default">16dp</dimen>
+    <dimen name="app_margin_default">16dp</dimen>
     <dimen name="normalText">16sp</dimen>
-    <dimen name="top_margin_default">10dp</dimen>
+    <dimen name="app_small_margin_default">10dp</dimen>
     <dimen name="smallText">14sp</dimen>
 </resources>

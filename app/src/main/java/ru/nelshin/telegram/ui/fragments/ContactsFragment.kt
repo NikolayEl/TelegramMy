@@ -13,6 +13,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import ru.nelshin.telegram.R
 import ru.nelshin.telegram.databinding.FragmentContactsBinding
 import ru.nelshin.telegram.models.CommonModel
+import ru.nelshin.telegram.ui.fragments.single_chat.SingleChatFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.CURRENT_UID
@@ -21,6 +22,7 @@ import ru.nelshin.telegram.utilits.NODE_USERS
 import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.getCommonModel
+import ru.nelshin.telegram.utilits.replaceFragment
 
 
 class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
@@ -72,9 +74,14 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
 
                 mRefUsersListener = AppValueEventListener {
                     val contact = it.getCommonModel()
-                    holder.name.text = contact.fullname
+
+                    if(contact.fullname.isEmpty()){
+                        holder.name.text = model.fullname
+                    } else holder.name.text = contact.fullname
+
                     holder.status.text = contact.state
                     holder.photo.downloadAndSetImage(contact.photoUrl)
+                    holder.itemView.setOnClickListener { replaceFragment(SingleChatFragment(model)) }
                 }
 
                 mRefUsers.addValueEventListener(mRefUsersListener)
@@ -96,11 +103,9 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
     override fun onPause() {
         super.onPause()
         mAdapter.stopListening()
-        println()
         mapListeners.forEach {
             it.key.removeEventListener(it.value)
         }
-        println()
     }
 }
 

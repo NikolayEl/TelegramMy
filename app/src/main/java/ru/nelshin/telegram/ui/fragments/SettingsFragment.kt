@@ -16,9 +16,10 @@ import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.databinding.FragmentSettingsBinding
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AUTH
+import ru.nelshin.telegram.utilits.AppStates
+import ru.nelshin.telegram.utilits.CURRENT_UID
 import ru.nelshin.telegram.utilits.FOLDER_PROFILE_IMAGE
 import ru.nelshin.telegram.utilits.REF_STORAGE_ROOT
-import ru.nelshin.telegram.utilits.CURRENT_UID
 import ru.nelshin.telegram.utilits.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.getUrlFromStorage
@@ -80,6 +81,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings_menu_exit -> {
+                AppStates.updateState(AppStates.OFFLINE)
                 AUTH.signOut()
                 (APP_ACTIVITY).replaceActivity(RegisterActivity())
             }
@@ -109,7 +111,5 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         }
     }
-
-
 
 }

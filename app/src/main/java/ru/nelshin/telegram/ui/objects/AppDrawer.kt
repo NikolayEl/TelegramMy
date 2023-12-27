@@ -23,7 +23,7 @@ import ru.nelshin.telegram.utilits.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.replaceFragment
 
-class AppDrawer() {
+class AppDrawer {
     private lateinit var mDriver: Drawer
     private lateinit var mHeader: AccountHeader
     private lateinit var mDrawerLayout: DrawerLayout
@@ -154,7 +154,7 @@ class AppDrawer() {
 
     private fun initLoader() {
         DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
-            @Deprecated("")
+            @Deprecated("", ReplaceWith(""))
             override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable) {
                 imageView.downloadAndSetImage(uri.toString())
             }
