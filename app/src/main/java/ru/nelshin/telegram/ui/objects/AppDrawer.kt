@@ -19,7 +19,7 @@ import ru.nelshin.telegram.R
 import ru.nelshin.telegram.ui.fragments.ContactsFragment
 import ru.nelshin.telegram.ui.fragments.SettingsFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
-import ru.nelshin.telegram.utilits.USER
+import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.replaceFragment
 
@@ -124,8 +124,8 @@ class AppDrawer {
 
     private fun clickToItem(position: Int){
         when (position) {
-            7 -> APP_ACTIVITY.replaceFragment(SettingsFragment())
-            4 -> APP_ACTIVITY.replaceFragment(ContactsFragment())
+            7 -> replaceFragment(SettingsFragment())
+            4 -> replaceFragment(ContactsFragment())
         }
     }
 

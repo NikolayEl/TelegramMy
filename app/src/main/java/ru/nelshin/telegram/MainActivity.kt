@@ -8,18 +8,17 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.databinding.ActivityMainBinding
-import ru.nelshin.telegram.ui.fragments.ChatsFragment
+import ru.nelshin.telegram.ui.fragments.MainFragment
+import ru.nelshin.telegram.ui.fragments.register.EnterPhoneNumberFragment
 import ru.nelshin.telegram.ui.objects.AppDrawer
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
-import ru.nelshin.telegram.utilits.AUTH
+import ru.nelshin.telegram.database.AUTH
 import ru.nelshin.telegram.utilits.AppStates
 import ru.nelshin.telegram.utilits.READ_CONTACTS
 import ru.nelshin.telegram.utilits.initContacts
-import ru.nelshin.telegram.utilits.initFarebase
-import ru.nelshin.telegram.utilits.initUser
-import ru.nelshin.telegram.utilits.replaceActivity
+import ru.nelshin.telegram.database.initFarebase
+import ru.nelshin.telegram.database.initUser
 import ru.nelshin.telegram.utilits.replaceFragment
 
 class MainActivity : AppCompatActivity() {
@@ -47,12 +46,12 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initFunc() {
+        setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
-            setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            replaceFragment(ChatsFragment(), false)
+            replaceFragment(MainFragment(), false)
         } else {
-            replaceActivity(RegisterActivity())
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
 
 

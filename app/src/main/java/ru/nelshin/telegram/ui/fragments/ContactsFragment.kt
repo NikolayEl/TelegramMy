@@ -16,12 +16,12 @@ import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.ui.fragments.single_chat.SingleChatFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppValueEventListener
-import ru.nelshin.telegram.utilits.CURRENT_UID
-import ru.nelshin.telegram.utilits.NODE_PHONES_CONTACTS
-import ru.nelshin.telegram.utilits.NODE_USERS
-import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
+import ru.nelshin.telegram.database.CURRENT_UID
+import ru.nelshin.telegram.database.NODE_PHONES_CONTACTS
+import ru.nelshin.telegram.database.NODE_USERS
+import ru.nelshin.telegram.database.REF_DATABASE_ROOT
 import ru.nelshin.telegram.utilits.downloadAndSetImage
-import ru.nelshin.telegram.utilits.getCommonModel
+import ru.nelshin.telegram.database.getCommonModel
 import ru.nelshin.telegram.utilits.replaceFragment
 
 

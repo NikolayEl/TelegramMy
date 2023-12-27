@@ -30,4 +30,7 @@
     <string name="setting_status_was_recently">was recently</string>
     <string name="setting_status_typing">typing</string>
     <string name="main_toast_read_contacts">read contacts</string>
+    <string name="single_chat_hint_message">message</string>
+    <string name="chat_btn_description_content">send a message</string>
+    <string name="chats_fragment_text">chats</string>
 </resources>

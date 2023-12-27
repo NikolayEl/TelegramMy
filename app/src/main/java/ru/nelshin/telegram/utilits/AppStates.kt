@@ -1,6 +1,12 @@
 package ru.nelshin.telegram.utilits
 
 import ru.nelshin.telegram.R
+import ru.nelshin.telegram.database.AUTH
+import ru.nelshin.telegram.database.CHILD_STATE
+import ru.nelshin.telegram.database.CURRENT_UID
+import ru.nelshin.telegram.database.NODE_USERS
+import ru.nelshin.telegram.database.REF_DATABASE_ROOT
+import ru.nelshin.telegram.database.USER
 
 enum class AppStates(val state: String) {
     ONLINE(APP_ACTIVITY.getString(R.string.setting_status_online)),

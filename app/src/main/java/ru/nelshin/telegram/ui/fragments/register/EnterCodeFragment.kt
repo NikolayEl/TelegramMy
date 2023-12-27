@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.fragments
+package ru.nelshin.telegram.ui.fragments.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.PhoneAuthProvider
-import ru.nelshin.telegram.MainActivity
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.databinding.FragmentEnterCodeBinding
-import ru.nelshin.telegram.utilits.AUTH
+import ru.nelshin.telegram.utilits.APP_ACTIVITY
+import ru.nelshin.telegram.database.AUTH
 import ru.nelshin.telegram.utilits.AppTextWatcher
-import ru.nelshin.telegram.utilits.CHILD_ID
-import ru.nelshin.telegram.utilits.CHILD_PHONE
-import ru.nelshin.telegram.utilits.CHILD_USERNAME
-import ru.nelshin.telegram.utilits.NODE_PHONES
-import ru.nelshin.telegram.utilits.NODE_USERS
-import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
-import ru.nelshin.telegram.utilits.replaceActivity
+import ru.nelshin.telegram.database.CHILD_ID
+import ru.nelshin.telegram.database.CHILD_PHONE
+import ru.nelshin.telegram.database.CHILD_USERNAME
+import ru.nelshin.telegram.database.NODE_PHONES
+import ru.nelshin.telegram.database.NODE_USERS
+import ru.nelshin.telegram.database.REF_DATABASE_ROOT
+import ru.nelshin.telegram.utilits.restartActivity
 import ru.nelshin.telegram.utilits.showToast
 
 
@@ -33,7 +32,7 @@ class EnterCodeFragment(val mPhoneNumber: String, val id: String) :
         savedInstanceState: Bundle?
     ): View {
         mBinding = FragmentEnterCodeBinding.inflate(inflater, container, false)
-        (activity as RegisterActivity).title = mPhoneNumber
+        APP_ACTIVITY.title = mPhoneNumber
         mBinding.registerInputCode.addTextChangedListener(AppTextWatcher {
             val string = mBinding.registerInputCode.text.toString()
             if (string.length == 6) {
@@ -62,7 +61,7 @@ class EnterCodeFragment(val mPhoneNumber: String, val id: String) :
                         REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
                             .addOnSuccessListener {
                                 showToast("Welcome")
-                                (activity as RegisterActivity).replaceActivity(MainActivity())
+                                restartActivity()
                             }
                             .addOnFailureListener{showToast(it.message.toString())}
                     }

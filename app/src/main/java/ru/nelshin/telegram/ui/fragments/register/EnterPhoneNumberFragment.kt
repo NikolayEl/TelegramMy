@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.fragments
+package ru.nelshin.telegram.ui.fragments.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import ru.nelshin.telegram.MainActivity
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.databinding.FragmentEnterPhoneNumberBinding
-import ru.nelshin.telegram.utilits.AUTH
-import ru.nelshin.telegram.utilits.replaceActivity
+import ru.nelshin.telegram.utilits.APP_ACTIVITY
+import ru.nelshin.telegram.database.AUTH
 import ru.nelshin.telegram.utilits.replaceFragment
+import ru.nelshin.telegram.utilits.restartActivity
 import ru.nelshin.telegram.utilits.showToast
 import java.util.concurrent.TimeUnit
 
@@ -38,7 +37,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                 AUTH.signInWithCredential(credential).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showToast("Welcom to telegram")
-                        (activity as RegisterActivity).replaceActivity(MainActivity())
+                        restartActivity()
                     } else {
                         showToast(it.exception?.message.toString())
                     }
@@ -72,7 +71,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
         PhoneAuthProvider.verifyPhoneNumber(
             PhoneAuthOptions
                 .newBuilder(FirebaseAuth.getInstance())
-                .setActivity(activity as RegisterActivity)
+                .setActivity(APP_ACTIVITY)
                 .setPhoneNumber(mPhoneNumber)
                 .setTimeout(60L, TimeUnit.SECONDS)
                 .setCallbacks(mCallback)

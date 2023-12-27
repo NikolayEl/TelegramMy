@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ru.nelshin.telegram.R
 import ru.nelshin.telegram.models.CommonModel
-import ru.nelshin.telegram.utilits.CURRENT_UID
+import ru.nelshin.telegram.database.CURRENT_UID
 import ru.nelshin.telegram.utilits.asTime
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {

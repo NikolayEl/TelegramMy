@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.nelshin.telegram.R
+import ru.nelshin.telegram.database.CURRENT_UID
+import ru.nelshin.telegram.database.NODE_USERNAMES
+import ru.nelshin.telegram.database.REF_DATABASE_ROOT
+import ru.nelshin.telegram.database.USER
+import ru.nelshin.telegram.database.updateCurrentUsername
 import ru.nelshin.telegram.databinding.FragmentChangeUserNameBinding
 import ru.nelshin.telegram.utilits.AppValueEventListener
-import ru.nelshin.telegram.utilits.CHILD_USERNAME
-import ru.nelshin.telegram.utilits.NODE_USERNAMES
-import ru.nelshin.telegram.utilits.NODE_USERS
-import ru.nelshin.telegram.utilits.REF_DATABASE_ROOT
-import ru.nelshin.telegram.utilits.CURRENT_UID
-import ru.nelshin.telegram.utilits.USER
 import ru.nelshin.telegram.utilits.showToast
 
 class ChangeUserNameFragment : BaseChangeFragment(R.layout.fragment_change_user_name) {
@@ -36,12 +35,12 @@ class ChangeUserNameFragment : BaseChangeFragment(R.layout.fragment_change_user_
 
     override fun change() {
         mNewUsername = mBinding.settingsInputUsername.text.toString().lowercase()
-        if (mNewUsername.isEmpty()){
+        if (mNewUsername.isEmpty()) {
             showToast("Field is empty")
         } else {
             REF_DATABASE_ROOT.child(NODE_USERNAMES)
-                .addListenerForSingleValueEvent(AppValueEventListener{
-                    if(it.hasChild(mNewUsername)){
+                .addListenerForSingleValueEvent(AppValueEventListener {
+                    if (it.hasChild(mNewUsername)) {
                         showToast("This user already exists")
                     } else {
                         changeUserName()
@@ -53,33 +52,11 @@ class ChangeUserNameFragment : BaseChangeFragment(R.layout.fragment_change_user_
     private fun changeUserName() {
         REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(CURRENT_UID)
             .addOnCompleteListener {
-                if (it.isSuccessful){
-                    updateCurrentUsername()
+                if (it.isSuccessful) {
+                    updateCurrentUsername(mNewUsername)
                 }
             }
     }
 
-    private fun updateCurrentUsername() {
-        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_USERNAME).setValue(mNewUsername)
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    deleteOldUsername()
-                } else {
-                    showToast(it.exception?.message.toString())
-                }
-            }
-    }
 
-    private fun deleteOldUsername() {
-        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(USER.username).removeValue()
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    showToast(getString(R.string.toast_data_updated))
-                    this.parentFragmentManager.popBackStack()
-                    USER.username = mNewUsername
-                } else {
-                    showToast(it.exception?.message.toString())
-                }
-            }
-    }
 }

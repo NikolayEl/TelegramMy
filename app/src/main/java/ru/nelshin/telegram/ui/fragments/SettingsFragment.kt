@@ -12,21 +12,20 @@ import android.view.ViewGroup
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.activities.RegisterActivity
 import ru.nelshin.telegram.databinding.FragmentSettingsBinding
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
-import ru.nelshin.telegram.utilits.AUTH
+import ru.nelshin.telegram.database.AUTH
 import ru.nelshin.telegram.utilits.AppStates
-import ru.nelshin.telegram.utilits.CURRENT_UID
-import ru.nelshin.telegram.utilits.FOLDER_PROFILE_IMAGE
-import ru.nelshin.telegram.utilits.REF_STORAGE_ROOT
-import ru.nelshin.telegram.utilits.USER
+import ru.nelshin.telegram.database.CURRENT_UID
+import ru.nelshin.telegram.database.FOLDER_PROFILE_IMAGE
+import ru.nelshin.telegram.database.REF_STORAGE_ROOT
+import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage
-import ru.nelshin.telegram.utilits.getUrlFromStorage
-import ru.nelshin.telegram.utilits.putImageToStorage
-import ru.nelshin.telegram.utilits.putUrlToDatabase
-import ru.nelshin.telegram.utilits.replaceActivity
+import ru.nelshin.telegram.database.getUrlFromStorage
+import ru.nelshin.telegram.database.putImageToStorage
+import ru.nelshin.telegram.database.putUrlToDatabase
 import ru.nelshin.telegram.utilits.replaceFragment
+import ru.nelshin.telegram.utilits.restartActivity
 import ru.nelshin.telegram.utilits.showToast
 
 
@@ -83,7 +82,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             R.id.settings_menu_exit -> {
                 AppStates.updateState(AppStates.OFFLINE)
                 AUTH.signOut()
-                (APP_ACTIVITY).replaceActivity(RegisterActivity())
+                restartActivity()
             }
 
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
