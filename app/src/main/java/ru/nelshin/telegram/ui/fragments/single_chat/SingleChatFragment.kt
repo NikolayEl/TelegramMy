@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.database.DatabaseReference
 import de.hdodenhof.circleimageview.CircleImageView
 import ru.nelshin.telegram.R
@@ -42,9 +44,11 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var mAdapter: SingleChatAdapter
     private lateinit var mRecycleView: RecyclerView
     private lateinit var mMessagesListener: AppChildEventListener
-    private var mCountMessages = 10
+    private var mCountMessages = 15
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var mLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +61,14 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     override fun onResume() {
         super.onResume()
+        initFields()
         initToolBar()
         initRecycleView()
+    }
+
+    private fun initFields() {
+        mSwipeRefreshLayout = mBinding.chatSwipeRefresh
+        mLayoutManager = LinearLayoutManager(this.context)
     }
 
     private fun initRecycleView() {
@@ -69,11 +79,20 @@ class SingleChatFragment(private val contact: CommonModel) :
             .child(CURRENT_UID)
             .child(contact.id)
         mRecycleView.adapter = mAdapter
+        mRecycleView.setHasFixedSize(true)
+        mRecycleView.isNestedScrollingEnabled = false
+        mRecycleView.layoutManager = mLayoutManager
 
         mMessagesListener = AppChildEventListener {
-            mAdapter.addItem(it.getCommonModel(), mSmoothScrollToPosition)
+            val message = it.getCommonModel()
             if (mSmoothScrollToPosition) {
-                mRecycleView.smoothScrollToPosition(mAdapter.itemCount)
+                mAdapter.addItemToBottom(message) {
+                    mRecycleView.smoothScrollToPosition(mAdapter.itemCount)
+                }
+            } else {
+                mAdapter.addItemToTop(message) {
+                    mSwipeRefreshLayout.isRefreshing = false
+                }
             }
         }
 
@@ -89,11 +108,13 @@ class SingleChatFragment(private val contact: CommonModel) :
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (mIsScrolling && dy < 0) {
+                if (mIsScrolling && dy < 0&&mLayoutManager.findFirstVisibleItemPosition() <= 3) {
                     updateData()
                 }
             }
         })
+
+        mSwipeRefreshLayout.setOnRefreshListener { updateData() }
     }
 
     private fun updateData() {

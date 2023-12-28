@@ -6,28 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.single_chat.SingleChatFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chat_recycle_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/chat_swipe_refresh"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_width="match_parent"
-        android:background="@color/ColorBlueWish"
-        tools:listitem="@layout/message_item"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/chat_input_message"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/ColorBlueWish"
+            tools:listitem="@layout/message_item" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <EditText
         android:id="@+id/chat_input_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/single_chat_hint_message"
-        android:padding="@dimen/app_small_margin_default"
         android:autofillHints="enter your message"
+        android:hint="@string/single_chat_hint_message"
+        android:inputType="text"
+        android:padding="@dimen/app_small_margin_default"
         android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorGrey"
-        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/chat_btn_send_message"
         app:layout_constraintStart_toStartOf="parent" />
@@ -36,12 +44,12 @@
         android:id="@+id/chat_btn_send_message"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:padding="@dimen/app_margin_default"
         android:contentDescription="@string/chat_btn_description_content"
+        android:padding="@dimen/app_small_margin_default"
         android:src="@drawable/ic_send_black24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/chat_input_message"/>
+        app:layout_constraintTop_toTopOf="@id/chat_input_message" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
