@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ import ru.nelshin.telegram.database.getUserModel
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.database.getCommonModel
 import ru.nelshin.telegram.database.sendMessage
+import ru.nelshin.telegram.utilits.AppChildEventListener
 import ru.nelshin.telegram.utilits.showToast
 
 class SingleChatFragment(private val contact: CommonModel) :
@@ -39,8 +41,10 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var mRefMessages: DatabaseReference
     private lateinit var mAdapter: SingleChatAdapter
     private lateinit var mRecycleView: RecyclerView
-    private lateinit var mMessagesListener:AppValueEventListener
-    private var mListMessages = emptyList<CommonModel>()
+    private lateinit var mMessagesListener: AppChildEventListener
+    private var mCountMessages = 10
+    private var mIsScrolling = false
+    private var mSmoothScrollToPosition = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,16 +64,44 @@ class SingleChatFragment(private val contact: CommonModel) :
     private fun initRecycleView() {
         mRecycleView = mBinding.chatRecycleView
         mAdapter = SingleChatAdapter()
-        mRefMessages = REF_DATABASE_ROOT.child(NODE_MESSAGES)
+        mRefMessages = REF_DATABASE_ROOT
+            .child(NODE_MESSAGES)
             .child(CURRENT_UID)
             .child(contact.id)
         mRecycleView.adapter = mAdapter
-        mMessagesListener = AppValueEventListener {dataSnapshot ->
-            mListMessages = dataSnapshot.children.map { it.getCommonModel() }
-            mAdapter.setList(mListMessages)
-            mRecycleView.smoothScrollToPosition(mAdapter.itemCount)
+
+        mMessagesListener = AppChildEventListener {
+            mAdapter.addItem(it.getCommonModel(), mSmoothScrollToPosition)
+            if (mSmoothScrollToPosition) {
+                mRecycleView.smoothScrollToPosition(mAdapter.itemCount)
+            }
         }
-        mRefMessages.addValueEventListener(mMessagesListener)
+
+        mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
+
+        mRecycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    mIsScrolling = true
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (mIsScrolling && dy < 0) {
+                    updateData()
+                }
+            }
+        })
+    }
+
+    private fun updateData() {
+        mSmoothScrollToPosition = false
+        mIsScrolling = false
+        mCountMessages += 10
+        mRefMessages.removeEventListener(mMessagesListener)
+        mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
     }
 
     private fun initToolBar() {
@@ -83,6 +115,7 @@ class SingleChatFragment(private val contact: CommonModel) :
         mRefUser = REF_DATABASE_ROOT.child(NODE_USERS).child(contact.id)
         mRefUser.addValueEventListener(mListenerInfoToolbat)
         mBinding.chatBtnSendMessage.setOnClickListener {
+            mSmoothScrollToPosition = true
             val message = mBinding.chatInputMessage.text.toString()
             if (message.isEmpty()) {
                 showToast("Enter message")
@@ -109,5 +142,7 @@ class SingleChatFragment(private val contact: CommonModel) :
         mToolbarInfo.visibility = View.GONE
         mRefUser.removeEventListener(mListenerInfoToolbat)
         mRefMessages.removeEventListener(mMessagesListener)
+        println()
     }
+
 }

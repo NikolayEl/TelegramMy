@@ -7,14 +7,15 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.database.CURRENT_UID
+import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.utilits.asTime
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
 
-    private var mListMessagesCache = emptyList<CommonModel>()
+    private var mListMessagesCache = mutableListOf<CommonModel>()
+    //private lateinit var mDiffResult: DiffUtil.DiffResult
 
     class SingleChatHolder(view: View) : RecyclerView.ViewHolder(view) {
         val blocUserMessage: ConstraintLayout = view.findViewById(R.id.bloc_user_message)
@@ -36,23 +37,33 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
     override fun onBindViewHolder(holder: SingleChatHolder, position: Int) {
         if (mListMessagesCache[position].from == CURRENT_UID) {
             holder.blocUserMessage.visibility = View.VISIBLE
-            holder.chatReceivedMessage.visibility = View.GONE
+            holder.blockReceivedMessage.visibility = View.GONE
             holder.chatUserMessage.text = mListMessagesCache[position].text
             holder.chatUserMessageTime.text =
                 mListMessagesCache[position].timeStamp.toString().asTime()
         } else {
             holder.blocUserMessage.visibility = View.GONE
-            holder.chatReceivedMessage.visibility = View.VISIBLE
+            holder.blockReceivedMessage.visibility = View.VISIBLE
             holder.chatReceivedMessage.text = mListMessagesCache[position].text
             holder.chatReceivedMessageTime.text =
                 mListMessagesCache[position].timeStamp.toString().asTime()
         }
-
     }
 
-    fun setList(list: List<CommonModel>) {
-        mListMessagesCache = list
-        notifyDataSetChanged()
+    fun addItem(item: CommonModel, toBottom: Boolean) {
+        if (toBottom) {
+            if (!mListMessagesCache.contains(item)) {
+                mListMessagesCache.add(item)
+                notifyItemInserted(mListMessagesCache.size)
+            }
+        } else {
+            if (!mListMessagesCache.contains(item)) {
+                mListMessagesCache.add(item)
+                mListMessagesCache.sortBy { it.timeStamp.toString() }
+                notifyItemInserted(0)
+            }
+
+        }
     }
 }
 
