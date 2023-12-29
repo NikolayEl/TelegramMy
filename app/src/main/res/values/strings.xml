@@ -33,4 +33,6 @@
     <string name="single_chat_hint_message">message</string>
     <string name="chat_btn_description_content">send a message</string>
     <string name="chats_fragment_text">chats</string>
+    <string name="hint_chat_input_Message_click">Record</string>
+    <string name="chat_received_image_description">TODO</string>
 </resources>
