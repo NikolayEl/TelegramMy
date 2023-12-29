@@ -17,6 +17,7 @@ import ru.nelshin.telegram.database.CHILD_USERNAME
 import ru.nelshin.telegram.database.NODE_PHONES
 import ru.nelshin.telegram.database.NODE_USERS
 import ru.nelshin.telegram.database.REF_DATABASE_ROOT
+import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.restartActivity
 import ru.nelshin.telegram.utilits.showToast
 
@@ -53,20 +54,27 @@ class EnterCodeFragment(val mPhoneNumber: String, val id: String) :
                 val dateMap = mutableMapOf<String, Any>()
                 dateMap[CHILD_ID] = uid
                 dateMap[CHILD_PHONE] = mPhoneNumber
-                dateMap[CHILD_USERNAME] = uid
 
-                REF_DATABASE_ROOT.child(NODE_PHONES).child(mPhoneNumber).setValue(uid)
-                    .addOnFailureListener { showToast(it.message.toString()) }
-                    .addOnSuccessListener {
-                        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+                REF_DATABASE_ROOT.child(NODE_USERS).child(uid)
+                    .addListenerForSingleValueEvent(AppValueEventListener {
+
+                        if (!it.hasChild(CHILD_USERNAME)) {
+                            dateMap[CHILD_USERNAME] = uid
+                        }
+                        REF_DATABASE_ROOT.child(NODE_PHONES).child(mPhoneNumber).setValue(uid)
+                            .addOnFailureListener { showToast(it.message.toString()) }
                             .addOnSuccessListener {
-                                showToast("Welcome")
-                                restartActivity()
+                                REF_DATABASE_ROOT.child(NODE_USERS).child(uid)
+                                    .updateChildren(dateMap)
+                                    .addOnSuccessListener {
+                                        showToast("Welcome")
+                                        restartActivity()
+                                    }
+                                    .addOnFailureListener { showToast(it.message.toString()) }
                             }
-                            .addOnFailureListener{showToast(it.message.toString())}
-                    }
+                    })
             } else showToast(task1.exception?.message.toString())
-        }
 
+        }
     }
 }
