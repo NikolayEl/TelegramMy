@@ -24,30 +24,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.nelshin.telegram.R
 import ru.nelshin.telegram.database.CURRENT_UID
-import ru.nelshin.telegram.database.FOLDER_MESSAGES_IMAGE
 import ru.nelshin.telegram.database.NODE_MESSAGES
 import ru.nelshin.telegram.database.NODE_USERS
 import ru.nelshin.telegram.database.REF_DATABASE_ROOT
-import ru.nelshin.telegram.database.REF_STORAGE_ROOT
 import ru.nelshin.telegram.database.TYPE_TEXT
 import ru.nelshin.telegram.database.getCommonModel
 import ru.nelshin.telegram.database.getMessageKey
-import ru.nelshin.telegram.database.getUrlFromStorage
 import ru.nelshin.telegram.database.getUserModel
-import ru.nelshin.telegram.database.putImageToStorage
 import ru.nelshin.telegram.database.sendMessage
-import ru.nelshin.telegram.database.sendMessageAsImage
 import ru.nelshin.telegram.database.uploadFileToStorage
 import ru.nelshin.telegram.databinding.FragmentSingleChatBinding
 import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.models.User
 import ru.nelshin.telegram.ui.fragments.BaseFragment
+import ru.nelshin.telegram.ui.fragments.message_recycle_view.views.AppViewFactory
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppChildEventListener
 import ru.nelshin.telegram.utilits.AppTextWatcher
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.AppVoiceRecorder
 import ru.nelshin.telegram.utilits.RECORD_AUDIO
+import ru.nelshin.telegram.utilits.TYPE_MESSAGE_IMAGE
+import ru.nelshin.telegram.utilits.TYPE_MESSAGE_VOICE
 import ru.nelshin.telegram.utilits.chekPermission
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.showToast
@@ -127,7 +125,8 @@ class SingleChatFragment(private val contact: CommonModel) :
                         mBinding.chatInputMessage.setText("")
                         mBinding.chatBtnVoice.colorFilter = null
                         mAppVoiceRecorder.stopRecord { file, messageKey ->
-                            uploadFileToStorage(Uri.fromFile(file), messageKey)
+                            uploadFileToStorage(Uri.fromFile(file), messageKey, contact.id, TYPE_MESSAGE_VOICE)
+                            mSmoothScrollToPosition = true
                         }
                     }
                 }
@@ -158,11 +157,11 @@ class SingleChatFragment(private val contact: CommonModel) :
         mMessagesListener = AppChildEventListener {
             val message = it.getCommonModel()
             if (mSmoothScrollToPosition) {
-                mAdapter.addItemToBottom(message) {
+                mAdapter.addItemToBottom(AppViewFactory.getView(message)) {
                     mRecycleView.smoothScrollToPosition(mAdapter.itemCount)
                 }
             } else {
-                mAdapter.addItemToTop(message) {
+                mAdapter.addItemToTop(AppViewFactory.getView(message)) {
                     mSwipeRefreshLayout.isRefreshing = false
                 }
             }
@@ -236,17 +235,8 @@ class SingleChatFragment(private val contact: CommonModel) :
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val uri = CropImage.getActivityResult(data).uri
             val messageKey = getMessageKey(contact.id)
-
-            val path = REF_STORAGE_ROOT
-                .child(FOLDER_MESSAGES_IMAGE)
-                .child(messageKey)
-
-            putImageToStorage(uri, path) {
-                getUrlFromStorage(path) {
-                    sendMessageAsImage(contact.id, it, messageKey)
-                    mSmoothScrollToPosition = true
-                }
-            }
+            uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
+            mSmoothScrollToPosition = true
         }
     }
 

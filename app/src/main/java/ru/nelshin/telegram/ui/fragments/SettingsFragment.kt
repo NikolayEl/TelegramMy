@@ -22,7 +22,7 @@ import ru.nelshin.telegram.database.REF_STORAGE_ROOT
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.database.getUrlFromStorage
-import ru.nelshin.telegram.database.putImageToStorage
+import ru.nelshin.telegram.database.putFileToStorage
 import ru.nelshin.telegram.database.putUrlToDatabase
 import ru.nelshin.telegram.utilits.replaceFragment
 import ru.nelshin.telegram.utilits.restartActivity
@@ -98,7 +98,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_IMAGE)
                 .child(CURRENT_UID)
 
-            putImageToStorage(uri, path){
+            putFileToStorage(uri, path){
                 getUrlFromStorage(path){
                     putUrlToDatabase(it){
                         mBinding.settingsUserPhoto.downloadAndSetImage(it)
