@@ -1,14 +1,14 @@
-package ru.nelshin.telegram.ui.fragments.message_recycle_view.views
+package ru.nelshin.telegram.ui.message_recycle_view.views
 
-data class ViewImageMessage(
+class ViewTextMessage(
     override val id: String,
     override val from: String,
     override val timeStamp: String,
-    override val fileUrl: String,
-    override val text: String = ""
-) :MessageView {
+    override val fileUrl: String = "",
+    override val text: String
+) : MessageView {
     override fun getTypeView(): Int {
-        return MessageView.MESSAGE_IMAGE
+        return MessageView.MESSAGE_TEXT
     }
 
     override fun equals(other: Any?): Boolean {

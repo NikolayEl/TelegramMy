@@ -1,6 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Telegram</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="descript_chat_item_play">play</string>
+    <string name="descript_chat_item_stop">stop</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings_default_username">FirstName LastName</string>
     <string name="settings_default_status">online</string>
@@ -9,7 +12,6 @@
     <string name="settings_label_text_bottom_phone">click to change phone number</string>
     <string name="settings_login_default">login</string>
     <string name="settings_label_login">Username</string>
-    <string name="settings_default_bio">About me</string>
     <string name="settings_label_bio_default">Write a little about yourself</string>
     <string name="settings_menu_change_name">Change name</string>
     <string name="settings_menu_exit">Exit</string>
@@ -35,4 +37,6 @@
     <string name="chats_fragment_text">chats</string>
     <string name="hint_chat_input_Message_click">Record</string>
     <string name="chat_received_image_description">TODO</string>
+
+
 </resources>

@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.fragments.register
+package ru.nelshin.telegram.ui.screens.register
 
 import android.os.Bundle
 import android.view.LayoutInflater

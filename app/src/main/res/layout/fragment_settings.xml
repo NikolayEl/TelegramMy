@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.SettingsFragment">
+    tools:context=".ui.screens.SettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_header_block"
@@ -138,7 +138,7 @@
         <TextView
             android:id="@+id/settings_bio"
             style="@style/normalText"
-            tools:text="@string/settings_default_bio"
+            tools:text="@string/settings_hint_input_bio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/settings_btn_change_bio" />
 

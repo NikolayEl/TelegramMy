@@ -16,8 +16,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import ru.nelshin.telegram.R
-import ru.nelshin.telegram.ui.fragments.ContactsFragment
-import ru.nelshin.telegram.ui.fragments.SettingsFragment
+import ru.nelshin.telegram.ui.screens.ContactsFragment
+import ru.nelshin.telegram.ui.screens.SettingsFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.utilits.downloadAndSetImage

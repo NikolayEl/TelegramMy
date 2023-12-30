@@ -9,8 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.nelshin.telegram.databinding.ActivityMainBinding
-import ru.nelshin.telegram.ui.fragments.MainFragment
-import ru.nelshin.telegram.ui.fragments.register.EnterPhoneNumberFragment
+import ru.nelshin.telegram.ui.screens.MainFragment
+import ru.nelshin.telegram.ui.screens.register.EnterPhoneNumberFragment
 import ru.nelshin.telegram.ui.objects.AppDrawer
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.database.AUTH

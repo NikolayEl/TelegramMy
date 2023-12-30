@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.fragments.single_chat
+package ru.nelshin.telegram.ui.screens.single_chat
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -36,8 +36,8 @@ import ru.nelshin.telegram.database.uploadFileToStorage
 import ru.nelshin.telegram.databinding.FragmentSingleChatBinding
 import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.models.User
-import ru.nelshin.telegram.ui.fragments.BaseFragment
-import ru.nelshin.telegram.ui.fragments.message_recycle_view.views.AppViewFactory
+import ru.nelshin.telegram.ui.screens.BaseFragment
+import ru.nelshin.telegram.ui.message_recycle_view.views.AppViewFactory
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppChildEventListener
 import ru.nelshin.telegram.utilits.AppTextWatcher

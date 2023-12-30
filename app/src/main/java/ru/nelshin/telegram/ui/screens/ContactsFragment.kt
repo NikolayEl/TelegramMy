@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.fragments
+package ru.nelshin.telegram.ui.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import ru.nelshin.telegram.R
 import ru.nelshin.telegram.databinding.FragmentContactsBinding
 import ru.nelshin.telegram.models.CommonModel
-import ru.nelshin.telegram.ui.fragments.single_chat.SingleChatFragment
+import ru.nelshin.telegram.ui.screens.single_chat.SingleChatFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.database.CURRENT_UID

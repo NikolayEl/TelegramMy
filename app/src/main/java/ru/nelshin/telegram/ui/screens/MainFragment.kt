@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.fragments
+package ru.nelshin.telegram.ui.screens
 
 import androidx.fragment.app.Fragment
 import ru.nelshin.telegram.R

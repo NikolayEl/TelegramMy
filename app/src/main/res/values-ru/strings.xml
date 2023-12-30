@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Телеграм</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="descript_chat_item_play">Прослушать</string>
+    <string name="descript_chat_item_stop">Остановить</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings_default_username">Имя Фамилия</string>
+    <string name="settings_default_status">в сети</string>
+    <string name="settings_text_account">Аккаунт</string>
+    <string name="settings_default_number_phone">+71111111111</string>
+    <string name="settings_label_text_bottom_phone">Нажмите чтобы выбрать номер телефона</string>
+    <string name="settings_login_default">логин</string>
+    <string name="settings_label_login">Имя в приложении</string>
+    <string name="settings_label_bio_default">Напишите немного о себе</string>
+    <string name="settings_menu_change_name">Сменить имя</string>
+    <string name="settings_menu_exit">Выход</string>
+    <string name="cd_register_image">register_image</string>
+    <string name="register_text_enter_code">Введите код</string>
+    <string name="register_text_we_send">Мы отправили смс с верификационным кодом на Ваш телефон</string>
+    <string name="register_hint_default_code">- - - - - -</string>
+    <string name="register_title_your_phone">Ваш телефон</string>
+    <string name="register_descript_registration">регистрация</string>
+    <string name="register_toast_enter_phone">Введите Ваш номер телефона</string>
+    <string name="settings_hint_input_name">Имя</string>
+    <string name="string_hint_input_surname">Фамилия</string>
+    <string name="settings_toast_name_is_empty">Это имя уже занято</string>
+    <string name="toast_data_updated">Данные обновлены</string>
+    <string name="settings_hint_input_username">Имя в приложении</string>
+    <string name="settings_hint_input_bio">о себе</string>
+    <string name="setting_status_online">в сети</string>
+    <string name="setting_status_was_recently">был недавно</string>
+    <string name="setting_status_typing">печатает</string>
+    <string name="main_toast_read_contacts">читать контакты</string>
+    <string name="single_chat_hint_message">сообщение</string>
+    <string name="chat_btn_description_content">отправить сообщение</string>
+    <string name="chats_fragment_text">чаты</string>
+    <string name="hint_chat_input_Message_click">Запись</string>
+    <string name="chat_received_image_description">ДЕЛАТЬ</string>
+
+</resources>
