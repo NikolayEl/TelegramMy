@@ -37,5 +37,6 @@
     <string name="chats_fragment_text">чаты</string>
     <string name="hint_chat_input_Message_click">Запись</string>
     <string name="chat_received_image_description">ДЕЛАТЬ</string>
+    <string name="descript_file">файл</string>
 
 </resources>

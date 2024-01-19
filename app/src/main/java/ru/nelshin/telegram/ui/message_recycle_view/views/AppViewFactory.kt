@@ -1,6 +1,7 @@
 package ru.nelshin.telegram.ui.message_recycle_view.views
 
 import ru.nelshin.telegram.models.CommonModel
+import ru.nelshin.telegram.utilits.TYPE_MESSAGE_FILE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_IMAGE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_VOICE
 
@@ -19,6 +20,13 @@ class AppViewFactory {
                     message.from,
                     message.timeStamp.toString(),
                     message.fileUrl
+                )
+                TYPE_MESSAGE_FILE -> ViewFileMessage(
+                    message.id,
+                    message.from,
+                    message.timeStamp.toString(),
+                    message.fileUrl,
+                    message.text
                 )
                 else -> ViewTextMessage(
                     message.id,

@@ -52,6 +52,7 @@ import ru.nelshin.telegram.utilits.TYPE_MESSAGE_IMAGE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_VOICE
 import ru.nelshin.telegram.utilits.chekPermission
 import ru.nelshin.telegram.utilits.downloadAndSetImage
+import ru.nelshin.telegram.utilits.getFilenameFromUri
 import ru.nelshin.telegram.utilits.showToast
 
 @Suppress("DEPRECATION")
@@ -275,12 +276,14 @@ class SingleChatFragment(private val contact: CommonModel) :
                 PICK_FILE_REQUEST_CODE -> {
                     val uri = data.data
                     val messageKey = getMessageKey(contact.id)
-                    uri?.let { uploadFileToStorage(it, messageKey, contact.id, TYPE_MESSAGE_FILE) }
+                    val filename = getFilenameFromUri(uri!!)
+                    uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_FILE, filename)
                     mSmoothScrollToPosition = true
                 }
             }
         }
     }
+
 
     override fun onPause() {
         super.onPause()
