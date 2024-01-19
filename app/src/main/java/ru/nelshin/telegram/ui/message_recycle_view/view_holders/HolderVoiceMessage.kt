@@ -55,6 +55,7 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
                 chatUserBtnStop.setOnClickListener {
                     stop {
                         chatUserBtnStop.setOnClickListener(null)
+                        chatUserBtnStop.setOnClickListener(null)
                         chatUserBtnPlay.visibility = View.VISIBLE
                         chatUserBtnStop.visibility = View.GONE
                     }
@@ -70,6 +71,7 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
                 chatReceivedBtnStop.visibility = View.VISIBLE
                 chatReceivedBtnStop.setOnClickListener {
                     stop {
+                        chatReceivedBtnStop.setOnClickListener(null)
                         chatReceivedBtnStop.setOnClickListener(null)
                         chatReceivedBtnPlay.visibility = View.VISIBLE
                         chatReceivedBtnStop.visibility = View.GONE
@@ -98,7 +100,7 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
         }
     }
 
-    override fun onDettach() {
+    override fun onDetach() {
         chatReceivedBtnPlay.setOnClickListener(null)
         chatUserBtnPlay.setOnClickListener(null)
         mAppVoicePlayer.release()

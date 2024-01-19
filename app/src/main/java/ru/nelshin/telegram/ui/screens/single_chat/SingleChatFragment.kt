@@ -1,7 +1,6 @@
 package ru.nelshin.telegram.ui.screens.single_chat
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,12 +9,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.database.DatabaseReference
 import com.theartofdev.edmodo.cropper.CropImage
 import de.hdodenhof.circleimageview.CircleImageView
@@ -36,24 +38,30 @@ import ru.nelshin.telegram.database.uploadFileToStorage
 import ru.nelshin.telegram.databinding.FragmentSingleChatBinding
 import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.models.User
-import ru.nelshin.telegram.ui.screens.BaseFragment
 import ru.nelshin.telegram.ui.message_recycle_view.views.AppViewFactory
+import ru.nelshin.telegram.ui.screens.BaseFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppChildEventListener
 import ru.nelshin.telegram.utilits.AppTextWatcher
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.AppVoiceRecorder
+import ru.nelshin.telegram.utilits.PICK_FILE_REQUEST_CODE
 import ru.nelshin.telegram.utilits.RECORD_AUDIO
+import ru.nelshin.telegram.utilits.TYPE_MESSAGE_FILE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_IMAGE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_VOICE
 import ru.nelshin.telegram.utilits.chekPermission
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.showToast
 
+@Suppress("DEPRECATION")
 class SingleChatFragment(private val contact: CommonModel) :
     BaseFragment(R.layout.fragment_single_chat) {
 
     private lateinit var mBinding: FragmentSingleChatBinding
+    private lateinit var mBottomSheetChoice: LinearLayout
+    private lateinit var mBtnAttachFile: ImageView
+    private lateinit var mBtnAttachImage: ImageView
 
     private lateinit var mListenerInfoToolbat: AppValueEventListener
     private lateinit var mReceivingUser: User
@@ -69,6 +77,7 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var mAppVoiceRecorder: AppVoiceRecorder
+    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,6 +97,9 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        mBottomSheetChoice = APP_ACTIVITY.findViewById(R.id.bottom_sheet_choice)
+        mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheetChoice)
+        mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         mAppVoiceRecorder = AppVoiceRecorder()
         mSwipeRefreshLayout = mBinding.chatSwipeRefresh
         mLayoutManager = LinearLayoutManager(this.context)
@@ -104,7 +116,7 @@ class SingleChatFragment(private val contact: CommonModel) :
             }
         })
 
-        mBinding.chatBtnAttach.setOnClickListener { attachFile() }
+        mBinding.chatBtnAttach.setOnClickListener { attach() }
 
         CoroutineScope(Dispatchers.IO).launch {
             mBinding.chatBtnVoice.setOnTouchListener { v, event ->
@@ -125,7 +137,12 @@ class SingleChatFragment(private val contact: CommonModel) :
                         mBinding.chatInputMessage.setText("")
                         mBinding.chatBtnVoice.colorFilter = null
                         mAppVoiceRecorder.stopRecord { file, messageKey ->
-                            uploadFileToStorage(Uri.fromFile(file), messageKey, contact.id, TYPE_MESSAGE_VOICE)
+                            uploadFileToStorage(
+                                Uri.fromFile(file),
+                                messageKey,
+                                contact.id,
+                                TYPE_MESSAGE_VOICE
+                            )
                             mSmoothScrollToPosition = true
                         }
                     }
@@ -135,7 +152,21 @@ class SingleChatFragment(private val contact: CommonModel) :
         }
     }
 
+    private fun attach() {
+        mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        mBtnAttachFile = APP_ACTIVITY.findViewById(R.id.btn_attach_file)
+        mBtnAttachImage = APP_ACTIVITY.findViewById(R.id.btn_attach_image)
+        mBtnAttachFile.setOnClickListener { attachFile() }
+        mBtnAttachImage.setOnClickListener { attachImage() }
+    }
+
     private fun attachFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
+    }
+
+    private fun attachImage() {
         CropImage.activity()
             .setAspectRatio(1, 1)
             .setRequestedSize(250, 250)
@@ -232,11 +263,22 @@ class SingleChatFragment(private val contact: CommonModel) :
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            val uri = CropImage.getActivityResult(data).uri
-            val messageKey = getMessageKey(contact.id)
-            uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
-            mSmoothScrollToPosition = true
+        if (data != null) {
+            when (requestCode) {
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val uri = CropImage.getActivityResult(data).uri
+                    val messageKey = getMessageKey(contact.id)
+                    uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
+                    mSmoothScrollToPosition = true
+                }
+
+                PICK_FILE_REQUEST_CODE -> {
+                    val uri = data.data
+                    val messageKey = getMessageKey(contact.id)
+                    uri?.let { uploadFileToStorage(it, messageKey, contact.id, TYPE_MESSAGE_FILE) }
+                    mSmoothScrollToPosition = true
+                }
+            }
         }
     }
 
@@ -251,5 +293,6 @@ class SingleChatFragment(private val contact: CommonModel) :
     override fun onDestroyView() {
         super.onDestroyView()
         mAppVoiceRecorder.releaseRecrorder()
+        mAdapter.onDestroy()
     }
 }

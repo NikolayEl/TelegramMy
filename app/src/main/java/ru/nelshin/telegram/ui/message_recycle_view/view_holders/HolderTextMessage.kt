@@ -43,7 +43,7 @@ class HolderTextMessage(view: View) : RecyclerView.ViewHolder(view), MessageHold
 
     }
 
-    override fun onDettach() {
+    override fun onDetach() {
 
     }
 }

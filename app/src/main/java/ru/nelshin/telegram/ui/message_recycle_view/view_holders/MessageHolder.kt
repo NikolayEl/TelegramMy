@@ -5,5 +5,5 @@ import ru.nelshin.telegram.ui.message_recycle_view.views.MessageView
 interface MessageHolder {
     fun drawMessage(view:MessageView)
     fun onAttach(view: MessageView)
-    fun onDettach()
+    fun onDetach()
 }

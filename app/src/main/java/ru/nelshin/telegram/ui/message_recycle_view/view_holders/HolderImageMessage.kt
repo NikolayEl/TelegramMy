@@ -12,14 +12,14 @@ import ru.nelshin.telegram.utilits.asTime
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 
 class HolderImageMessage(view: View) : RecyclerView.ViewHolder(view), MessageHolder {
-    val blockReceivedImageMessage: ConstraintLayout =
+    private val blockReceivedImageMessage: ConstraintLayout =
         view.findViewById(R.id.bloc_recived_image_message)
-    val blocUserImageMessage: ConstraintLayout = view.findViewById(R.id.bloc_user_image_message)
-    val chatUserImage: ImageView = view.findViewById(R.id.chat_user_image)
-    val chatReceivedImage: ImageView = view.findViewById(R.id.chat_received_image)
-    val chatUserImageMessageTime: TextView =
+    private val blocUserImageMessage: ConstraintLayout = view.findViewById(R.id.bloc_user_image_message)
+    private val chatUserImage: ImageView = view.findViewById(R.id.chat_user_image)
+    private val chatReceivedImage: ImageView = view.findViewById(R.id.chat_received_image)
+    private val chatUserImageMessageTime: TextView =
         view.findViewById(R.id.chat_user_image_message_time)
-    val chatReceivedImageMessageTime: TextView =
+    private val chatReceivedImageMessageTime: TextView =
         view.findViewById(R.id.chat_recived_image_message_time)
 
     override fun drawMessage(view: MessageView) {
@@ -43,7 +43,7 @@ class HolderImageMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
 
     }
 
-    override fun onDettach() {
+    override fun onDetach() {
 
     }
 }

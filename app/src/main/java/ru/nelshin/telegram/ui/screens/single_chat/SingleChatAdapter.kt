@@ -10,6 +10,7 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private var mListMessagesCache = mutableListOf<MessageView>()
+    private var mListHolders = mutableListOf<MessageHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -28,11 +29,13 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         (holder as MessageHolder).onAttach(mListMessagesCache[holder.absoluteAdapterPosition])
+        mListHolders.add(holder as MessageHolder)
         super.onViewAttachedToWindow(holder)
     }
 
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
-        (holder as MessageHolder).onDettach()
+        (holder as MessageHolder).onDetach()
+        mListHolders.remove(holder as MessageHolder)
         super.onViewDetachedFromWindow(holder)
     }
 
@@ -51,6 +54,12 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             notifyItemInserted(0)
         }
         onSuccess()
+    }
+
+    fun onDestroy() {
+        mListHolders.forEach {
+            it.onDetach()
+        }
     }
 }
 
