@@ -38,6 +38,8 @@
     <string name="hint_chat_input_Message_click">Record</string>
     <string name="chat_received_image_description">TODO</string>
     <string name="descript_file">file</string>
+    <string name="clear_chat">clear chat</string>
+    <string name="delete_chat">delete chat</string>
 
 
 </resources>

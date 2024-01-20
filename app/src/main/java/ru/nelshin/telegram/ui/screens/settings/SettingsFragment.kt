@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.screens
+package ru.nelshin.telegram.ui.screens.settings
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -24,11 +24,13 @@ import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.database.getUrlFromStorage
 import ru.nelshin.telegram.database.putFileToStorage
 import ru.nelshin.telegram.database.putUrlToDatabase
+import ru.nelshin.telegram.ui.screens.BaseFragment
 import ru.nelshin.telegram.utilits.replaceFragment
 import ru.nelshin.telegram.utilits.restartActivity
 import ru.nelshin.telegram.utilits.showToast
 
 
+@Suppress("DEPRECATION")
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private lateinit var mBinding: FragmentSettingsBinding

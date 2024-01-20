@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.screens
+package ru.nelshin.telegram.ui.screens.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import ru.nelshin.telegram.R
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.database.setNameToDatabase
 import ru.nelshin.telegram.databinding.FragmentChangeNameBinding
+import ru.nelshin.telegram.ui.screens.BaseChangeFragment
 import ru.nelshin.telegram.utilits.showToast
 
 class ChangeNameFragment : BaseChangeFragment(R.layout.fragment_change_name) {

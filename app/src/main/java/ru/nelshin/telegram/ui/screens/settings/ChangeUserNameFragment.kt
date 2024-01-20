@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.screens
+package ru.nelshin.telegram.ui.screens.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import ru.nelshin.telegram.database.REF_DATABASE_ROOT
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.database.updateCurrentUsername
 import ru.nelshin.telegram.databinding.FragmentChangeUserNameBinding
+import ru.nelshin.telegram.ui.screens.BaseChangeFragment
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.showToast
 

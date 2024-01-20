@@ -38,5 +38,7 @@
     <string name="hint_chat_input_Message_click">Запись</string>
     <string name="chat_received_image_description">ДЕЛАТЬ</string>
     <string name="descript_file">файл</string>
+    <string name="clear_chat">очистить чат</string>
+    <string name="delete_chat">удалить чат</string>
 
 </resources>

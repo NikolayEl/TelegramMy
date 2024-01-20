@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.screens
+package ru.nelshin.telegram.ui.screens.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import ru.nelshin.telegram.R
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.database.setBioToDatabase
 import ru.nelshin.telegram.databinding.FragmentChangeBioBinding
+import ru.nelshin.telegram.ui.screens.BaseChangeFragment
 
 class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
 

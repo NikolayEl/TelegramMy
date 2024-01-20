@@ -5,6 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -100,6 +103,7 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        setHasOptionsMenu(true)
         mBottomSheetChoice = APP_ACTIVITY.findViewById(R.id.bottom_sheet_choice)
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheetChoice)
         mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
@@ -301,4 +305,16 @@ class SingleChatFragment(private val contact: CommonModel) :
         mAppVoiceRecorder.releaseRecrorder()
         mAdapter.onDestroy()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        activity?.menuInflater?.inflate(R.menu.single_chat_action_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+        }
+        return true
+    }
+
 }
