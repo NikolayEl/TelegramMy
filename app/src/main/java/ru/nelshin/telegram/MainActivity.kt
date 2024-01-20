@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.nelshin.telegram.databinding.ActivityMainBinding
-import ru.nelshin.telegram.ui.screens.MainFragment
+import ru.nelshin.telegram.ui.screens.main_list.MainListFragment
 import ru.nelshin.telegram.ui.screens.register.EnterPhoneNumberFragment
 import ru.nelshin.telegram.ui.objects.AppDrawer
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
             mAppDrawer.create()
-            replaceFragment(MainFragment(), false)
+            replaceFragment(MainListFragment(), false)
         } else {
             replaceFragment(EnterPhoneNumberFragment(), false)
         }

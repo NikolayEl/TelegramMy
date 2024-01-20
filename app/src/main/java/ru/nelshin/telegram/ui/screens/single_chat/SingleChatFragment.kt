@@ -33,6 +33,7 @@ import ru.nelshin.telegram.database.TYPE_TEXT
 import ru.nelshin.telegram.database.getCommonModel
 import ru.nelshin.telegram.database.getMessageKey
 import ru.nelshin.telegram.database.getUserModel
+import ru.nelshin.telegram.database.saveToMainList
 import ru.nelshin.telegram.database.sendMessage
 import ru.nelshin.telegram.database.uploadFileToStorage
 import ru.nelshin.telegram.databinding.FragmentSingleChatBinding
@@ -47,6 +48,7 @@ import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.AppVoiceRecorder
 import ru.nelshin.telegram.utilits.PICK_FILE_REQUEST_CODE
 import ru.nelshin.telegram.utilits.RECORD_AUDIO
+import ru.nelshin.telegram.utilits.TYPE_CHAT
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_FILE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_IMAGE
 import ru.nelshin.telegram.utilits.TYPE_MESSAGE_VOICE
@@ -244,6 +246,7 @@ class SingleChatFragment(private val contact: CommonModel) :
             if (message.isEmpty()) {
                 showToast("Enter message")
             } else sendMessage(message, contact.id, TYPE_TEXT) {
+                saveToMainList(contact.id, TYPE_CHAT)
                 mBinding.chatInputMessage.setText("")
             }
         }
