@@ -33,6 +33,8 @@ import ru.nelshin.telegram.database.NODE_MESSAGES
 import ru.nelshin.telegram.database.NODE_USERS
 import ru.nelshin.telegram.database.REF_DATABASE_ROOT
 import ru.nelshin.telegram.database.TYPE_TEXT
+import ru.nelshin.telegram.database.clearChat
+import ru.nelshin.telegram.database.deleteChat
 import ru.nelshin.telegram.database.getCommonModel
 import ru.nelshin.telegram.database.getMessageKey
 import ru.nelshin.telegram.database.getUserModel
@@ -44,6 +46,7 @@ import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.models.User
 import ru.nelshin.telegram.ui.message_recycle_view.views.AppViewFactory
 import ru.nelshin.telegram.ui.screens.BaseFragment
+import ru.nelshin.telegram.ui.screens.main_list.MainListFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppChildEventListener
 import ru.nelshin.telegram.utilits.AppTextWatcher
@@ -58,6 +61,7 @@ import ru.nelshin.telegram.utilits.TYPE_MESSAGE_VOICE
 import ru.nelshin.telegram.utilits.chekPermission
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.utilits.getFilenameFromUri
+import ru.nelshin.telegram.utilits.replaceFragment
 import ru.nelshin.telegram.utilits.showToast
 
 @Suppress("DEPRECATION")
@@ -312,9 +316,15 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
+            R.id.menu_clear_chat -> clearChat(contact.id){
+                showToast(getString(R.string.chat_cleared))
+                replaceFragment(MainListFragment())
+            }
+            R.id.menu_delete_chat -> deleteChat(contact.id){
+                showToast(getString(R.string.chat_deleted))
+                replaceFragment(MainListFragment())
+            }
         }
         return true
     }
-
 }

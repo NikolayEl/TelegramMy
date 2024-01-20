@@ -40,5 +40,7 @@
     <string name="descript_file">файл</string>
     <string name="clear_chat">очистить чат</string>
     <string name="delete_chat">удалить чат</string>
+    <string name="chat_deleted">Чат удален</string>
+    <string name="chat_cleared">Чат очищен</string>
 
 </resources>
