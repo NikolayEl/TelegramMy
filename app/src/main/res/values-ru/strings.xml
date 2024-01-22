@@ -42,5 +42,6 @@
     <string name="delete_chat">удалить чат</string>
     <string name="chat_deleted">Чат удален</string>
     <string name="chat_cleared">Чат очищен</string>
+    <string name="add_member">Добавить участника</string>
 
 </resources>

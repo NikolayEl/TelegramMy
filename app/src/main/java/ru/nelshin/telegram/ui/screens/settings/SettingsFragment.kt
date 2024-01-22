@@ -24,7 +24,7 @@ import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.database.getUrlFromStorage
 import ru.nelshin.telegram.database.putFileToStorage
 import ru.nelshin.telegram.database.putUrlToDatabase
-import ru.nelshin.telegram.ui.screens.BaseFragment
+import ru.nelshin.telegram.ui.screens.base.BaseFragment
 import ru.nelshin.telegram.utilits.replaceFragment
 import ru.nelshin.telegram.utilits.restartActivity
 import ru.nelshin.telegram.utilits.showToast

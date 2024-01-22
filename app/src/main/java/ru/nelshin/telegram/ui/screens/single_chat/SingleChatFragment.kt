@@ -45,7 +45,7 @@ import ru.nelshin.telegram.databinding.FragmentSingleChatBinding
 import ru.nelshin.telegram.models.CommonModel
 import ru.nelshin.telegram.models.User
 import ru.nelshin.telegram.ui.message_recycle_view.views.AppViewFactory
-import ru.nelshin.telegram.ui.screens.BaseFragment
+import ru.nelshin.telegram.ui.screens.base.BaseFragment
 import ru.nelshin.telegram.ui.screens.main_list.MainListFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppChildEventListener

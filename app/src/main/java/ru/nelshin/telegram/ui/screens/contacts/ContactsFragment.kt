@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.screens
+package ru.nelshin.telegram.ui.screens.contacts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,6 +22,7 @@ import ru.nelshin.telegram.database.NODE_USERS
 import ru.nelshin.telegram.database.REF_DATABASE_ROOT
 import ru.nelshin.telegram.utilits.downloadAndSetImage
 import ru.nelshin.telegram.database.getCommonModel
+import ru.nelshin.telegram.ui.screens.base.BaseFragment
 import ru.nelshin.telegram.utilits.replaceFragment
 
 

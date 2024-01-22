@@ -42,6 +42,7 @@
     <string name="delete_chat">delete chat</string>
     <string name="chat_deleted">Chat deleted</string>
     <string name="chat_cleared">Chat cleared</string>
+    <string name="add_member">Add member</string>
 
 
 </resources>

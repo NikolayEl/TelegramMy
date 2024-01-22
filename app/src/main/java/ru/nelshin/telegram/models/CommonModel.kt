@@ -15,7 +15,8 @@ data class CommonModel(
     var timeStamp:Any = "",
     var fileUrl:String = "empty",
 
-    var lastMessage: String = ""
+    var lastMessage: String = "",
+    var choice:Boolean = false
 
 
 ) {

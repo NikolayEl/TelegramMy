@@ -8,7 +8,7 @@ import ru.nelshin.telegram.R
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.database.setBioToDatabase
 import ru.nelshin.telegram.databinding.FragmentChangeBioBinding
-import ru.nelshin.telegram.ui.screens.BaseChangeFragment
+import ru.nelshin.telegram.ui.screens.base.BaseChangeFragment
 
 class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
 

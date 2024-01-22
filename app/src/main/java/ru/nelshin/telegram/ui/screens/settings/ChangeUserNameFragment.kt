@@ -11,7 +11,7 @@ import ru.nelshin.telegram.database.REF_DATABASE_ROOT
 import ru.nelshin.telegram.database.USER
 import ru.nelshin.telegram.database.updateCurrentUsername
 import ru.nelshin.telegram.databinding.FragmentChangeUserNameBinding
-import ru.nelshin.telegram.ui.screens.BaseChangeFragment
+import ru.nelshin.telegram.ui.screens.base.BaseChangeFragment
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.showToast
 

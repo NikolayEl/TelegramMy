@@ -1,4 +1,4 @@
-package ru.nelshin.telegram.ui.screens
+package ru.nelshin.telegram.ui.screens.base
 
 import android.view.Menu
 import android.view.MenuInflater
