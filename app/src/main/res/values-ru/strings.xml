@@ -43,5 +43,24 @@
     <string name="chat_deleted">Чат удален</string>
     <string name="chat_cleared">Чат очищен</string>
     <string name="add_member">Добавить участника</string>
+    <string name="desc_complete">выполнено</string>
+    <string name="create_group">Создать группу</string>
+    <string name="enter_group_name">Введите название группы</string>
+    <string name="add_at_least_one_participant">добавьте минимум одного участника</string>
+
+    <plurals name="count_members">
+        <item quantity="one">%d участник</item>
+        <item quantity="few">%d участника</item>
+        <item quantity="many">%d участников</item>
+
+    </plurals>
+    <string name="create_a_secret_chat">Создать секретный чат</string>
+    <string name="create_chanel">Создать канал</string>
+    <string name="contacts">Контакты</string>
+    <string name="calls">Звонки</string>
+    <string name="favorites">Избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="invite_friends">Добавить друзей</string>
+    <string name="help_about_telegram">Спросить о телеграмм</string>
 
 </resources>

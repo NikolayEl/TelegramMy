@@ -1,6 +1,5 @@
 package ru.nelshin.telegram.ui.screens.groups
 
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.nelshin.telegram.R
@@ -11,11 +10,14 @@ import ru.nelshin.telegram.database.NODE_USERS
 import ru.nelshin.telegram.database.REF_DATABASE_ROOT
 import ru.nelshin.telegram.database.getCommonModel
 import ru.nelshin.telegram.models.CommonModel
+import ru.nelshin.telegram.ui.screens.base.BaseFragment
 import ru.nelshin.telegram.utilits.APP_ACTIVITY
 import ru.nelshin.telegram.utilits.AppValueEventListener
 import ru.nelshin.telegram.utilits.hideKeyboard
+import ru.nelshin.telegram.utilits.replaceFragment
+import ru.nelshin.telegram.utilits.showToast
 
-class AddContactsFragment : Fragment(R.layout.fragment_add_contacts) {
+class AddContactsFragment : BaseFragment(R.layout.fragment_add_contacts) {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: AddContactsAdapter
@@ -25,14 +27,16 @@ class AddContactsFragment : Fragment(R.layout.fragment_add_contacts) {
     private var mListItems = listOf<CommonModel>()
 
     override fun onResume() {
+        listContacts.clear()
         super.onResume()
         APP_ACTIVITY.title = getString(R.string.add_member)
-        APP_ACTIVITY.mAppDrawer.enableDrawer()
         hideKeyboard()
         initRecyclerView()
         APP_ACTIVITY.findViewById<FloatingActionButton>(R.id.add_contacts_btn_next).setOnClickListener {
-            listContacts.forEach{
-                println(it.id)
+            if(listContacts.isEmpty()){
+                showToast(getString(R.string.add_at_least_one_participant))
+            } else listContacts.forEach{
+                    replaceFragment(CreateGroupFragment(listContacts))
             }
         }
     }
